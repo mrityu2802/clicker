@@ -47,7 +47,8 @@ const App = () => {
       .catch((err) => console.error(err))
       .finally(() => setTimeout(() => setIsClicked(false), 200));
   };
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     setIsLoggedIn(true);
     localStorage.setItem("userId", userId);
     localStorage.setItem("isLoggedIn", true);
@@ -65,9 +66,15 @@ const App = () => {
       </header>
       <div className="flex items-center justify-center min-h-screen bg-gray-900/80 p-4">
         {!isLoggedIn ? (
-          <div className="min-w-md flex flex-col bg-white p-6 rounded-lg shadow-lg text-center w-80">
-            <h1 className="text-2xl font-bold mb-4">Enter Your Username</h1>
+          <form
+            onSubmit={handleLogin}
+            className="min-w-md flex flex-col bg-white p-6 rounded-lg shadow-lg text-center w-80"
+          >
+            <label htmlFor="userId" className="text-2xl font-bold mb-4">
+              Enter Your Username
+            </label>
             <input
+              id="userId"
               type="text"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
@@ -75,13 +82,13 @@ const App = () => {
               className="w-full p-2 border rounded-md mb-4"
             />
             <button
-              onClick={handleLogin}
+              type="submit"
               disabled={!userId}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:opacity-75 disabled:hover:bg-blue-500 cursor-pointer"
             >
               Start
             </button>
-          </div>
+          </form>
         ) : (
           <div className="bg-white min-w-md flex flex-col items-center gap-2 p-6 rounded-lg shadow-lg text-center w-80">
             <h1 className="text-5xl font-bold mb-4">Clicker</h1>
