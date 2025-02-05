@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getUser } from "./api/userApi";
 import { userClick } from "./api/clickerApi";
 import { Toaster, toast } from "react-hot-toast";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
@@ -60,17 +61,7 @@ const App = () => {
     <>
       <Toaster />
       <header className="bg-slate-700 border-b border-gray-700 fixed w-full top-0 z-40 backdrop-blur-lg bg-slate-100/80 text-white">
-        {isLoggedIn && (
-          <div className="mx-auto px-4 h-16 flex items-center justify-between">
-            <span className="font-semibold">{userId.toUpperCase()}</span>
-            <button
-              className="cursor-pointer min-w-fit rounded-lg hover:bg-slate-800/20 px-4 py-2 hover:ring ring-gray-800"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
-        )}
+        {isLoggedIn && <Navbar userId={userId} handleLogout={handleLogout} />}
       </header>
       <div className="flex items-center justify-center min-h-screen bg-gray-900/80 p-4">
         {!isLoggedIn ? (
